@@ -95,7 +95,34 @@ function init(player, OPPONENT){
           GAME_OVER = true;
           return;
       }
+ if(OPPONENT == "computer"){
+    // Get the id of the space the using minimax algorithm
+    let id = board[i][j];
 
+    // Prevent the player to play the same space twice
+    if(gameData[id]) return;
+
+    // store the player's move to gameData
+    gameData[id] = currentPlayer;
+    
+    // draw the move on board
+    drawOnBoard(currentPlayer, i, j);
+
+    // Check if the play wins
+    if(isWinner(gameData, currentPlayer)){
+        showGameOver(currentPlayer);
+        GAME_OVER = true;
+        return;
+    }
+
+    // check if it's a tie game
+    if(isTie(gameData)){
+        showGameOver("tie");
+        GAME_OVER = true;
+        return;
+    }
+
+ }
       // GIVE TURN TO THE OTHER PLAYER
       currentPlayer = currentPlayer == player.man ? player.friend : player.man;
   });
